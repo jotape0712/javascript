@@ -1,7 +1,9 @@
 
+listaDeNumerosSorteados = []
 let numeroSecreto = gerarNumeroAleatorio();
 let tentativas = 1;
 let pontuacao = 0;
+let botaoChutar = document.getElementById('verificarChute');
 
 // let titulo = document.querySelector('h1');
 // titulo.innerHTML = 'Jogo do número secreto!';   
@@ -31,7 +33,7 @@ function verificarChute() {
           exibirTextoNaTela('h1', 'Acertou!')
           exibirTextoNaTela('h2', `Pontuação: ${pontuacao}`)
           exibirTextoNaTela("p", `Você descobriu o numero secreto após ${tentativas} ${palavraTentativa}!`)
-
+          botaoChutar.disabled = true;
      }
           else {
                if (chute > numeroSecreto) {
@@ -46,15 +48,19 @@ function verificarChute() {
           }
      }
 
-     // }
-     
-
-
 
 
 
 function gerarNumeroAleatorio() {
-     return parseInt(Math.random() * 10 + 1);
+     let numeroEscolhido = parseInt(Math.random() * 4 + 1);
+     if (listaDeNumerosSorteados.includes(numeroEscolhido)) {
+          return gerarNumeroAleatorio();
+     }  else {
+          listaDeNumerosSorteados.push(numeroEscolhido);
+          // "Push" adiciona item ao final da lista
+          console.log(listaDeNumerosSorteados)
+          return numeroEscolhido;
+     }
 }
 
 function limparCampo() {
@@ -64,7 +70,8 @@ function limparCampo() {
 }
 
 function reiniciarJogo() {
-     gerarNumeroAleatorio();
+     botaoChutar.disabled = false;
+     numeroSecreto = gerarNumeroAleatorio();
      limparCampo();
      tentativas = 1;
      exibirTextoNaTela('h1', 'Jogo do número secreto!')
