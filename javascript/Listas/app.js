@@ -1,6 +1,7 @@
 
 listaDeNumerosSorteados = []
 let numeroSecreto = gerarNumeroAleatorio();
+let numeroLimite = 10;
 let tentativas = 1;
 let pontuacao = 0;
 let botaoChutar = document.getElementById('verificarChute');
@@ -14,6 +15,8 @@ let botaoChutar = document.getElementById('verificarChute');
 function exibirTextoNaTela(tag, texto) {   
      let campo = document.querySelector(tag);  
      campo.innerHTML = texto; 
+     responsiveVoice.speak(texto, 'Brazilian Portuguese Female', {rate:1.2});
+     // Comando para leitura do texto (Não é nativo do JSON, foi implementado no HTML)
 }
 
 // Função utilizada para facilitar o uso das funções acima!
@@ -52,7 +55,13 @@ function verificarChute() {
 
 
 function gerarNumeroAleatorio() {
-     let numeroEscolhido = parseInt(Math.random() * 4 + 1);
+     let numeroEscolhido = parseInt(Math.random() * 10 + 1);
+     let quantidadeElementosLista = listaDeNumerosSorteados.length;
+
+     if (quantidadeElementosLista == 3) {
+          listaDeNumerosSorteados = [];
+     }
+
      if (listaDeNumerosSorteados.includes(numeroEscolhido)) {
           return gerarNumeroAleatorio();
      }  else {
